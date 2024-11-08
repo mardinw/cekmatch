@@ -21,11 +21,8 @@ export default function Dashboard() {
     });
 
     return (
-    <div className="mt-10 text-center">
+    <div className=" text-center">
         <h1 className="text-2xl font-bold underline">Welcome to dashboard</h1>
-        <ul>
-            <li></li>
-        </ul>
     </div>
   );
 }

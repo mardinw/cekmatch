@@ -1,10 +1,21 @@
-import { Button } from "@/components/ui/button";
+"use client"
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
-  return (
-    <div>
-      <h1>Hello world!</h1>
-      <Button>Hello me!</Button>
-    </div>
-  );
+  const router = useRouter();
+  const isAccessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
+
+  const isAuthorize = () => {
+    if (isAccessToken) {
+      router.push("/dashboard");
+    } else {
+      router.push("/signin");
+    }
+  }
+
+  // cek kondisinya pakai useEffect
+  useEffect(() =>{
+    isAuthorize();
+  })
 }
