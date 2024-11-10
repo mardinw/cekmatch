@@ -10,8 +10,28 @@ export default function Dashboard() {
     const baseUrl = authClient.baseURL;
 
     const isAccessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
-    const isAuthorize = () => {
+    const isAuthorize = async () => {
         if (!isAccessToken || isAccessToken === 'undefined') {
+            router.push('/signin');
+        }
+          // Fetch untuk mengecek validitas token
+          try {
+            const response = await fetch(`${baseUrl}/v1/data`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${isAccessToken}`
+                }
+            });
+
+            if (response.status !== 200) {
+                // Jika token tidak valid, redirect ke halaman login
+                localStorage.removeItem('access_token');
+                router.push('/signin');
+            }
+        } catch (error) {
+            console.error('Error validating token:', error);
+            // Jika ada error saat fetch, juga redirect ke halaman login
+            localStorage.removeItem('access_token');
             router.push('/signin');
         }
     }
