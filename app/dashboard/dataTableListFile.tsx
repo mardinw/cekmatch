@@ -1,80 +1,65 @@
 "use client"
+import { TableListFile } from "@/lib/tables/listfiles";
+import { columns } from "./columns";
+import { ListAllFile } from "@/dtos/listFIleAll";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+import { useEffect, useState } from "react";
 
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table"
+async function fetchData(): Promise<ListAllFile[] | null> {
+  const baseUrl = authClient.baseURL;
+  const accessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+  if (!accessToken || accessToken === 'undefined') {
+      return null; // Kembali ke null jika token tidak ada atau tidak valid
+  }
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  try {
+      const response = await fetch(`${baseUrl}/v1/data/all`, {
+          method: 'GET',
+          headers: {
+              'Authorization': `Bearer ${accessToken}`
+          }
+      });
+
+      if (response.status === 200) {
+          const data = await response.json();
+          return data; // Mengembalikan data jika request berhasil
+      } else {
+          localStorage.removeItem('access_token'); // Hapus token jika tidak valid
+          return null;
+      }
+  } catch (error) {
+      console.error('Error validating token:', error);
+      localStorage.removeItem('access_token');
+      return null;
+  }
 }
 
-export function DataTableListFile<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  })
+export default function DataTableListFile() {
+  const router = useRouter();
+    const [data, setData] = useState<ListAllFile[] | null>(null);
 
+    useEffect(() => {
+        const getData = async () => {
+            const data = await fetchData();
+            if (data) {
+                setData(data); // Set data jika token valid
+            } else {
+                router.push('/signin'); // Redirect jika token tidak valid
+            }
+        };
+
+        getData();
+    }, [router]);
+  
   return (
-    <div className="rounded-md border">
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                )
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </div>
+    <>
+      {data ? (
+        <TableListFile  columns={columns} data={data}/>
+      ) : (
+        <p>loading...</p>
+      )}
+    </>
   )
 }
