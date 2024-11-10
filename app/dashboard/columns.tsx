@@ -35,14 +35,13 @@ export const columns: ColumnDef<ListAllFile>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
+            <DropdownMenuItem>
+              Read Data
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>Match Data</DropdownMenuItem>
+            <DropdownMenuItem>Export Match</DropdownMenuItem>
+            <DropdownMenuItem>Delete Data</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

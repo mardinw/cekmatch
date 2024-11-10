@@ -5,6 +5,7 @@ import { ListAllFile } from "@/dtos/listFIleAll";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { useEffect, useState } from "react";
+import { Progress } from "@/components/ui/progress";
 
 async function fetchData(): Promise<ListAllFile[] | null> {
   const baseUrl = authClient.baseURL;
@@ -37,8 +38,9 @@ async function fetchData(): Promise<ListAllFile[] | null> {
 }
 
 export default function DataTableListFile() {
-  const router = useRouter();
+    const router = useRouter();
     const [data, setData] = useState<ListAllFile[] | null>(null);
+    const [progress, setProgress] = useState(13);
 
     useEffect(() => {
         const getData = async () => {
@@ -50,7 +52,7 @@ export default function DataTableListFile() {
             }
         };
 
-        getData();
+       getData();
     }, [router]);
   
   return (
@@ -58,7 +60,7 @@ export default function DataTableListFile() {
       {data ? (
         <TableListFile  columns={columns} data={data}/>
       ) : (
-        <p>loading...</p>
+        <p className="text-center">Fetch data ...</p>
       )}
     </>
   )
