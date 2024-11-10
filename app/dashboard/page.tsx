@@ -1,16 +1,18 @@
 "use client"
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
 export default function Dashboard() {
     const router = useRouter();
 
     const baseUrl = authClient.baseURL;
+    const [isError, setError] = useState<string|null>(null);
+    const [isFile, setFile] = useState<string[]>([]);
 
     const isAccessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
-    const isAuthorize = async () => {
+    const isListFile = async () => {
         if (!isAccessToken || isAccessToken === 'undefined') {
             router.push('/signin');
         }
@@ -37,7 +39,7 @@ export default function Dashboard() {
     }
 
     useEffect(() => {
-        isAuthorize();
+        isListFile();
     });
 
     return (
