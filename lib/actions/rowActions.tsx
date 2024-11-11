@@ -3,8 +3,11 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { MoreHorizontal } from 'lucide-react';
 import React, {  useState } from 'react'
 
+interface RowActionsProps {
+    fileName: string
+}
 
-export default function RowActions() {
+export default function RowActions({fileName}: RowActionsProps) {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 

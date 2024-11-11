@@ -23,7 +23,7 @@ export const columnsList: ColumnDef<ListAllFile>[] = [
       const file = row.original
 
     return  (
-      <RowActions />
+      <RowActions fileName={file.nama_file}/>
     )
     }, 
   },
