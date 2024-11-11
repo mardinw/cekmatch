@@ -4,7 +4,7 @@ import { ListAllFile } from "@/dtos/listFIleAll";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { useEffect, useState } from "react";
-import { columnsList } from "@/lib/tables/columns/list";
+import { columnsPreview } from "@/lib/tables/columns/preview";
 
 async function fetchData(): Promise<ListAllFile[] | null> {
   const baseUrl = authClient.baseURL;
@@ -36,7 +36,7 @@ async function fetchData(): Promise<ListAllFile[] | null> {
   }
 }
 
-export default function DataTableListFile() {
+export default function DataTablePreview() {
     const router = useRouter();
     const [data, setData] = useState<ListAllFile[] | null>(null);
 
@@ -56,7 +56,7 @@ export default function DataTableListFile() {
   return (
     <>
       {data ? (
-        <TableListFile  columns={columnsList} data={data}/>
+        <TableListFile  columns={columnsPreview} data={data}/>
       ) : (
         <p className="text-center">Fetch data ...</p>
       )}
