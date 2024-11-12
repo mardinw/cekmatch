@@ -62,7 +62,7 @@ async function handleMatchExport({fileName} : fetchDataProps) {
 
       const a = document.createElement('a');
       a.href = url;
-      a.download = fileName;
+      a.download = `match_${Date.now()}.xlsx`;
       a.click();
 
       window.URL.revokeObjectURL(url);
