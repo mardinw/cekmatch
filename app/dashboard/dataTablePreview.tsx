@@ -6,7 +6,11 @@ import { authClient } from "@/lib/auth-client";
 import { useEffect, useState } from "react";
 import { columnsPreview } from "@/lib/tables/columns/preview";
 
-async function fetchData(): Promise<ListAllFile[] | null> {
+interface fetchDataProps {
+  fileName: string
+}
+
+async function fetchData(fileName: fetchDataProps): Promise<ListAllFile[] | null> {
   const baseUrl = authClient.baseURL;
   const accessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
 
@@ -15,7 +19,7 @@ async function fetchData(): Promise<ListAllFile[] | null> {
   }
 
   try {
-      const response = await fetch(`${baseUrl}/v1/data/all`, {
+      const response = await fetch(`${baseUrl}/v1/data/read?file=${fileName}`, {
           method: 'GET',
           headers: {
               'Authorization': `Bearer ${accessToken}`
@@ -36,13 +40,13 @@ async function fetchData(): Promise<ListAllFile[] | null> {
   }
 }
 
-export default function DataTablePreview() {
+export default function DataTablePreview(fileName: string) {
     const router = useRouter();
     const [data, setData] = useState<ListAllFile[] | null>(null);
 
     useEffect(() => {
         const getData = async () => {
-            const data = await fetchData();
+            const data = await fetchData({fileName});
             if (data) {
                 setData(data); // Set data jika token valid
             } else {
