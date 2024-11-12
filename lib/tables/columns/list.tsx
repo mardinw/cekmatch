@@ -21,7 +21,6 @@ export const columnsList: ColumnDef<ListAllFile>[] = [
     id: "actions",
     cell: ({row}) => {
       const file = row.original;
-      console.log(file);
     return  (
       <RowActions fileName={file.nama_file}/>
     )

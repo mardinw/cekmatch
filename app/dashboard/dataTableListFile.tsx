@@ -6,10 +6,11 @@ import { authClient } from "@/lib/auth-client";
 import { useEffect, useState } from "react";
 import { columnsList } from "@/lib/tables/columns/list";
 
-async function fetchData(): Promise<ListAllFile[] | null> {
-  const baseUrl = authClient.baseURL;
-  const accessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
+const baseUrl = authClient.baseURL;
 
+async function fetchData(): Promise<ListAllFile[] | null> {
+
+  const accessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
   if (!accessToken || accessToken === 'undefined') {
       return null; // Kembali ke null jika token tidak ada atau tidak valid
   }
@@ -57,8 +58,8 @@ export default function DataTableListFile() {
     <>
       {data ? (
         <TableListFile  columns={columnsList} data={data}/>
-      ) : (
-        <p className="text-center">Fetch data ...</p>
+      ): (
+        <p className="text-center">loading...</p>
       )}
     </>
   )

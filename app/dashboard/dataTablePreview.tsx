@@ -1,17 +1,18 @@
 "use client"
-import { TableListFile } from "@/lib/tables/listfiles";
 import { ListAllFile } from "@/dtos/listFIleAll";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { useEffect, useState } from "react";
 import { columnsPreview } from "@/lib/tables/columns/preview";
+import { TablePreviewFile } from "@/lib/tables/previewfiles";
+import { useSelection } from "@/lib/context/selection";
 
 interface fetchDataProps {
   fileName: string
 }
+const baseUrl = authClient.baseURL;
 
-async function fetchData(fileName: fetchDataProps): Promise<ListAllFile[] | null> {
-  const baseUrl = authClient.baseURL;
+async function fetchData({fileName}: fetchDataProps): Promise<ListAllFile[] | null> {
   const accessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
 
   if (!accessToken || accessToken === 'undefined') {
@@ -40,18 +41,20 @@ async function fetchData(fileName: fetchDataProps): Promise<ListAllFile[] | null
   }
 }
 
-export default function DataTablePreview(fileName: string) {
+export default function DataTablePreview() {
     const router = useRouter();
     const [data, setData] = useState<ListAllFile[] | null>(null);
-
+    const { selectedPreview} = useSelection();
     useEffect(() => {
         const getData = async () => {
-            const data = await fetchData({fileName});
+          if(selectedPreview) {
+            const data = await fetchData({fileName: selectedPreview});
             if (data) {
                 setData(data); // Set data jika token valid
             } else {
                 router.push('/signin'); // Redirect jika token tidak valid
             }
+          }
         };
 
        getData();
@@ -59,11 +62,9 @@ export default function DataTablePreview(fileName: string) {
   
   return (
     <>
-      {data ? (
-        <TableListFile  columns={columnsPreview} data={data}/>
-      ) : (
-        <p className="text-center">Fetch data ...</p>
-      )}
+      {data &&
+        <TablePreviewFile  columns={columnsPreview} data={data}/>
+      }
     </>
   )
 }
