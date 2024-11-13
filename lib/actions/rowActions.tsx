@@ -1,17 +1,15 @@
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal } from 'lucide-react';
-import React, {  useState } from 'react'
+import React, { useState } from 'react'
 import { useSelection } from '../context/selection';
 import { authClient } from '../auth-client';
+import { FileProps } from '@/dtos/interfaceFilename';
 
-interface RowActionsProps {
-    fileName: string
-}
 
 const baseUrl = authClient.baseURL;
 
-async function handleMatchExport({fileName} : RowActionsProps) {
+async function handleMatchExport({fileName} : FileProps) {
   const accessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
 
   if (!accessToken || accessToken === 'undefined') {
@@ -43,7 +41,7 @@ async function handleMatchExport({fileName} : RowActionsProps) {
   }
 };
 
-export default function RowActions({fileName}: RowActionsProps) {
+export default function RowActions({fileName}: FileProps) {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -54,7 +52,6 @@ export default function RowActions({fileName}: RowActionsProps) {
         setSelectedMatch,
         selectedExportMatch,
         setSelectedExportMatch,
-        selectedDelete,
         setSelectedDelete,
         clickedPreviewButton,
         setClickedPreviewButton,
@@ -66,12 +63,13 @@ export default function RowActions({fileName}: RowActionsProps) {
 
     const handlePreviewClick = (file:string) =>{
         if(selectedPreview === file) {
+          // jika file yang diklik sama, maka hilangkan preview
             setSelectedPreview(null);
         } else {
+          // jika file yang diklik berbeda, maka set preview ke yang baru
             setSelectedPreview(file);
         }
         setSelectedMatch(null);
-
         setClickedPreviewButton({[file]: !clickedPreviewButton[file]});
         setClickedMatchButton({});
     }
@@ -110,6 +108,7 @@ export default function RowActions({fileName}: RowActionsProps) {
     const toggleMenu = () => {
         setIsMenuOpen(prev => !prev);
     }
+
 
     return (
         <DropdownMenu>

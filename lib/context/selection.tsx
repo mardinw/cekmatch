@@ -14,6 +14,7 @@ export const SelectionProvider: FC<{ children: ReactNode}> = ({children}) => {
     const [clickedMatchButton, setClickedMatchButton] = useState<Record<string,boolean>>({});
     const [clickedExportButton, setClickedExportButton] = useState<Record<string,boolean>>({});
     const [clickedDeleteButton, setClickedDeleteButton] = useState<Record<string,boolean>>({});
+    const [file, setFile] = useState<File>();
 
     return (
         <SelectionContext.Provider value={{
@@ -25,6 +26,7 @@ export const SelectionProvider: FC<{ children: ReactNode}> = ({children}) => {
             clickedMatchButton, setClickedMatchButton,
             clickedExportButton, setClickedExportButton,
             clickedDeleteButton, setClickedDeleteButton,
+            file, setFile,
         }}>
             {children}
         </SelectionContext.Provider>

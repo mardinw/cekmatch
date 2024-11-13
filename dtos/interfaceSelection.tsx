@@ -17,4 +17,6 @@ export interface SelectionContextType {
     setClickedExportButton: Dispatch<SetStateAction<Record<string, boolean>>>;
     clickedDeleteButton: Record<string, boolean>
     setClickedDeleteButton: Dispatch<SetStateAction<Record<string, boolean>>>;
+    file: File|undefined;
+    setFile: Dispatch<SetStateAction<File|undefined>>;
 }
