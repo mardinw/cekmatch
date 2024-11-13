@@ -7,7 +7,7 @@ import { ColumnDef } from "@tanstack/react-table"
 export const columnsList: ColumnDef<ListAllFile>[] = [
   {
     accessorKey: "users",
-    header: "User",
+    header: "UUID",
   },
   {
     accessorKey: "jumlah_data",
@@ -19,6 +19,7 @@ export const columnsList: ColumnDef<ListAllFile>[] = [
   },
   {
     id: "actions",
+    header: "Aksi",
     cell: ({row}) => {
       const file = row.original;
     return  (

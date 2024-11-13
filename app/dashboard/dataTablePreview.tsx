@@ -6,13 +6,11 @@ import { useEffect, useState } from "react";
 import { columnsPreview } from "@/lib/tables/columns/preview";
 import { TablePreviewFile } from "@/lib/tables/previewfiles";
 import { useSelection } from "@/lib/context/selection";
+import { FileProps } from "@/dtos/interfaceFilename";
 
-interface fetchDataProps {
-  fileName: string
-}
 const baseUrl = authClient.baseURL;
 
-async function fetchData({fileName}: fetchDataProps): Promise<ListAllFile[] | null> {
+async function fetchData({fileName}: FileProps): Promise<ListAllFile[] | null> {
   const accessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
 
   if (!accessToken || accessToken === 'undefined') {

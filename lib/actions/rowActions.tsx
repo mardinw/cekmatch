@@ -3,43 +3,11 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { MoreHorizontal } from 'lucide-react';
 import React, { useState } from 'react'
 import { useSelection } from '../context/selection';
-import { authClient } from '../auth-client';
 import { FileProps } from '@/dtos/interfaceFilename';
+import { HandlerMatchExport } from './handlerMatchExport';
+import { HandlerDelete } from './handlerDelete';
 
 
-const baseUrl = authClient.baseURL;
-
-async function handleMatchExport({fileName} : FileProps) {
-  const accessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
-
-  if (!accessToken || accessToken === 'undefined') {
-      return null; // Kembali ke null jika token tidak ada atau tidak valid
-  }
-  try{
-    const res = await fetch(`${baseUrl}/v1/data/match/export?file=${fileName}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`
-      }
-    });
-
-    if(res.ok) {
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = fileName;
-      a.click();
-
-      window.URL.revokeObjectURL(url);
-    } else {
-      console.error('Gagal mengekspor data', res.statusText);
-    }
-  } catch (e) {
-    console.error('Error saat mengekspor data:', e);
-  }
-};
 
 export default function RowActions({fileName}: FileProps) {
 
@@ -50,15 +18,11 @@ export default function RowActions({fileName}: FileProps) {
         setSelectedPreview,
         selectedMatch,
         setSelectedMatch,
-        selectedExportMatch,
-        setSelectedExportMatch,
         setSelectedDelete,
         clickedPreviewButton,
         setClickedPreviewButton,
         clickedMatchButton,
         setClickedMatchButton,
-        clickedExportButton,
-        setClickedExportButton
     } = useSelection();
 
     const handlePreviewClick = (file:string) =>{
@@ -85,25 +49,10 @@ export default function RowActions({fileName}: FileProps) {
         setClickedMatchButton({[file]: !clickedMatchButton[file]});
         setClickedPreviewButton({});
     }
-    
-    const handleExportMatchClick = async (file:string) =>{
-        if(selectedExportMatch === file) {
-            setSelectedExportMatch(null);
-        } else {
-            setSelectedExportMatch(file);
-            await handleMatchExport({ fileName: file });
-        }
-        setSelectedPreview(null);
-
-        setClickedExportButton({[file]: !clickedExportButton[file]});
-        setClickedPreviewButton({});
-    }
-
 
     const handleDeleteClick = (file:string) => {
         setSelectedDelete(file);
     }
-
 
     const toggleMenu = () => {
         setIsMenuOpen(prev => !prev);
@@ -124,8 +73,8 @@ export default function RowActions({fileName}: FileProps) {
             <DropdownMenuItem onClick={() => handlePreviewClick(fileName)}>Read Data</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => handleMatchClick(fileName)}>Match Data</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleExportMatchClick(fileName)}>Export Match</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleDeleteClick(fileName)}>Delete Data</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => HandlerMatchExport({fileName})}>Export Match</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => HandlerDelete({fileName})}>Delete Data</DropdownMenuItem>
           </DropdownMenuContent>
         )}
       </DropdownMenu>

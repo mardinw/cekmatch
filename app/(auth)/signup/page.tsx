@@ -15,13 +15,11 @@ import { z } from "zod";
 
 export default function SignUp() {
 
-    const baseUrl = authClient.baseURL;
 
     const form = useForm<z.infer<typeof signFormSchema>>({
         resolver: zodResolver(signFormSchema),
         defaultValues: {
             username: "",
-            email: "",
             password: "",
         },
     })
@@ -29,16 +27,15 @@ export default function SignUp() {
     const [errorMessage, setError] = useState<string>("");
     const router = useRouter();
     async function onSubmit(values: z.infer<typeof signFormSchema>) {
-        const { username, email, password} = values;
+        const { username, password} = values;
         try {
-            const res = await fetch(`${baseUrl}/v1/signup`, {
+            const res = await fetch(`${authClient.baseURL}/v1/signup`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
                     username,
-                    email,
                     password,
                 }),
             });
@@ -58,8 +55,8 @@ export default function SignUp() {
 
             router.push('/signin');
         } catch(err) {
-            console.error('Login failed:', err);
-            setError('Login failed. Please check your credentials');
+            console.error('Register failed:', err);
+            setError('Create Account Failed. Try different Username');
         }
     }
 
@@ -79,22 +76,9 @@ export default function SignUp() {
                         name="username"
                         render={( {field} ) => (
                             <FormItem>
-                                <FormLabel>Yourname</FormLabel>
+                                <FormLabel>Username</FormLabel>
                                 <FormControl>
-                                    <Input type="text" placeholder="your name" {...field} />
-                                </FormControl>
-                                <FormMessage/>
-                            </FormItem>
-                        )}
-                    />
-                    <FormField 
-                        control={form.control}
-                        name="email"
-                        render={( {field} ) => (
-                            <FormItem>
-                                <FormLabel>Email</FormLabel>
-                                <FormControl>
-                                    <Input type="email" placeholder="john@email.com" {...field} />
+                                    <Input type="text" placeholder="username" {...field} />
                                 </FormControl>
                                 <FormMessage/>
                             </FormItem>

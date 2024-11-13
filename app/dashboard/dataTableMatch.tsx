@@ -7,13 +7,11 @@ import { TableMatchFile } from "@/lib/tables/matchfile";
 import { MatchFile } from "@/dtos/matchFile";
 import { useSelection } from "@/lib/context/selection";
 import { Button } from "@/components/ui/button";
+import { FileProps } from "@/dtos/interfaceFilename";
+import { HandlerMatchExport } from "@/lib/actions/handlerMatchExport";
 
-interface fetchDataProps {
-  fileName: string
-}
-const baseUrl = authClient.baseURL;
 
-async function fetchData({fileName}: fetchDataProps): Promise<MatchFile[] | null> {
+async function fetchData({fileName}: FileProps): Promise<MatchFile[] | null> {
   const accessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
 
   if (!accessToken || accessToken === 'undefined') {
@@ -21,7 +19,7 @@ async function fetchData({fileName}: fetchDataProps): Promise<MatchFile[] | null
   }
 
   try {
-      const response = await fetch(`${baseUrl}/v1/data/match?file=${fileName}`, {
+      const response = await fetch(`${authClient.baseURL}/v1/data/match?file=${fileName}`, {
           method: 'GET',
           headers: {
               'Authorization': `Bearer ${accessToken}`
@@ -41,38 +39,6 @@ async function fetchData({fileName}: fetchDataProps): Promise<MatchFile[] | null
       return null;
   }
 }
-
-async function handleMatchExport({fileName} : fetchDataProps) {
-  const accessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
-
-  if (!accessToken || accessToken === 'undefined') {
-      return null; // Kembali ke null jika token tidak ada atau tidak valid
-  }
-  try{
-    const res = await fetch(`${baseUrl}/v1/data/match/export?file=${fileName}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`
-      }
-    });
-
-    if(res.ok) {
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `match_${Date.now()}.xlsx`;
-      a.click();
-
-      window.URL.revokeObjectURL(url);
-    } else {
-      console.error('Gagal mengekspor data', res.statusText);
-    }
-  } catch (e) {
-    console.error('Error saat mengekspor data:', e);
-  }
-};
 
 export default function DataTableMatch() {
     const router = useRouter();
@@ -96,7 +62,7 @@ export default function DataTableMatch() {
 
     const handleExport = () => {
       if(selectedMatch) {
-        handleMatchExport({fileName: selectedMatch})
+        HandlerMatchExport({fileName: selectedMatch})
       }
     }
 

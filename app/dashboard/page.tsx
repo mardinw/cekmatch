@@ -6,40 +6,8 @@ import { useSelection } from "@/lib/context/selection";
 import { authClient } from "@/lib/auth-client";
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
+import { HandleDownloadSample } from "@/lib/actions/handlerDownloadSample";
 
-const baseUrl = authClient.baseURL;
-
-const handleDownloadSample = async () => {
-  const accessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
-  const sampleFile = 'sample.xlsx'
-  if (!accessToken || accessToken === 'undefined') {
-      return null; // Kembali ke null jika token tidak ada atau tidak valid
-  }
-  try{
-    const res = await fetch(`${baseUrl}/v1/data/sample`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`
-      }
-    });
-
-    if(res.ok) {
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = sampleFile;
-      a.click();
-
-      window.URL.revokeObjectURL(url);
-    } else {
-      console.error('Gagal mendownload sample', res.statusText);
-    }
-  } catch (e) {
-    console.error('Error saat mendownload sample data:', e);
-  }
-};
 
 export default function Dashboard() {
   const { 
@@ -64,7 +32,7 @@ export default function Dashboard() {
       const data = new FormData();
       data.set('file', file);
 
-      const res = await fetch(`${baseUrl}/v1/data/upload`, {
+      const res = await fetch(`${authClient.baseURL}/v1/data/upload`, {
         method: "POST",
         headers: {
           'Authorization': `Bearer ${accessToken}`,
@@ -86,9 +54,7 @@ export default function Dashboard() {
       console.error(error);
     } finally {
       setIsUploading(false);
-      setTimeout(() => {
-        window.location.reload();
-      }, 5000);
+      window.location.reload();
     }
   }
 
@@ -102,7 +68,7 @@ export default function Dashboard() {
       <div className="mt-4 flex justify-center space-x-4">
           <button 
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-            onClick={() => handleDownloadSample()}
+            onClick={() => HandleDownloadSample()}
           >
             Download Sample
           </button>

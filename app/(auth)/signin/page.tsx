@@ -15,12 +15,11 @@ import { useRouter } from "next/navigation";
 
 export default function SignIn() {
 
-    const baseUrl = authClient.baseURL;
 
     const form = useForm<z.infer<typeof signInFormSchema>>({
         resolver: zodResolver(signInFormSchema),
         defaultValues: {
-            email: "",
+            username: "",
             password: "",
         },
     })
@@ -28,15 +27,15 @@ export default function SignIn() {
     const [errorMessage, setError] = useState<string>("");
     const router = useRouter();
     async function onSubmit(values: z.infer<typeof signInFormSchema>) {
-        const { email, password} = values;
+        const { username, password} = values;
         try {
-            const res = await fetch(`${baseUrl}/v1/signin`, {
+            const res = await fetch(`${authClient.baseURL}/v1/signin`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    email,
+                    username,
                     password,
                 }),
             });
@@ -74,12 +73,12 @@ export default function SignIn() {
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                     <FormField 
                         control={form.control}
-                        name="email"
+                        name="username"
                         render={( {field} ) => (
                             <FormItem>
-                                <FormLabel>Email</FormLabel>
+                                <FormLabel>Username</FormLabel>
                                 <FormControl>
-                                    <Input type="email" placeholder="john@email.com" {...field} />
+                                    <Input type="text" placeholder="your username" {...field} />
                                 </FormControl>
                                 <FormMessage/>
                             </FormItem>
