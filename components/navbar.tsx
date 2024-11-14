@@ -58,7 +58,7 @@ export default function Navbar() {
                 </Link>
                 <div>
                     { isActive ? (
-                        <Button onClick={handleLogout}>Sign Out</Button>
+                        <Button onClick={handleLogout} variant={'sky'}>Sign Out</Button>
                     ): 
                     <Link href="/signin" className={buttonVariants()}>Sign In</Link>
                     }

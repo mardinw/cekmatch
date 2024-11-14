@@ -98,7 +98,7 @@ export default function SignUp() {
                         )}
                     />
                     {errorMessage && <p className="text-error">{errorMessage}</p>}
-                    <Button className="w-full" type="submit">Submit</Button>
+                    <Button className="w-full" type="submit" variant={'green'}>Submit</Button>
                 </form>
             </Form>
         </CardContent>

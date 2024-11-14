@@ -18,7 +18,6 @@ export default function RowActions({fileName}: FileProps) {
         setSelectedPreview,
         selectedMatch,
         setSelectedMatch,
-        setSelectedDelete,
         clickedPreviewButton,
         setClickedPreviewButton,
         clickedMatchButton,
@@ -50,9 +49,9 @@ export default function RowActions({fileName}: FileProps) {
         setClickedPreviewButton({});
     }
 
-    const handleDeleteClick = (file:string) => {
-        setSelectedDelete(file);
-    }
+    // const handleDeleteClick = (file:string) => {
+    //     setSelectedDelete(file);
+    // }
 
     const toggleMenu = () => {
         setIsMenuOpen(prev => !prev);

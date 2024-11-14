@@ -12,6 +12,7 @@ import { authClient } from "@/lib/auth-client";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import * as jwt from 'jsonwebtoken';
 
 export default function SignIn() {
 
@@ -26,6 +27,8 @@ export default function SignIn() {
 
     const [errorMessage, setError] = useState<string>("");
     const router = useRouter();
+
+
     async function onSubmit(values: z.infer<typeof signInFormSchema>) {
         const { username, password} = values;
         try {
@@ -49,14 +52,23 @@ export default function SignIn() {
             }
             const data = await res.json();
             localStorage.setItem('access_token', data.token);
+
+            const decoded = jwt.decode(data.token);
+            if(decoded &&  typeof decoded === 'object' && 'role' in decoded) {
+
+                if(decoded.role === 'admin') {
+                    router.push('/admin');
+                } else if(decoded.role === 'user') {
+                    router.push('/dashboard');
+                }
+            }
+
             toast({
                 title: "Please wait...",
             });
-
-            router.push('/dashboard');
         } catch(err) {
             console.error('Login failed:', err);
-            setError('Login failed. Please check your credentials');
+            setError(`Login failed: Contact your administrator`);
         }
     }
 
@@ -98,7 +110,7 @@ export default function SignIn() {
                         )}
                     />
                     {errorMessage && <p className="text-error">{errorMessage}</p>}
-                    <Button className="w-full" type="submit">Submit</Button>
+                    <Button className="w-full" variant={'sky'} type="submit">Submit</Button>
                 </form>
             </Form>
         </CardContent>
