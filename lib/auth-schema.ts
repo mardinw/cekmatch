@@ -4,6 +4,7 @@ export const signFormSchema = z.object({
     username: z
         .string()
         .min(2, {message: 'Name must be at least 2 character long'})
+        .regex(/^\S+$/, {message: 'Nama pengguna tidak boleh mengandung spasi.'})
         .max(50, {message: 'Name cannot exceed 50 characters'}),
     password: z
         .string()

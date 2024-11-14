@@ -44,8 +44,12 @@ export default function SignIn() {
             });
 
             if(!res.ok) {
-                if(res.status === 404) {
-                    setError("Password dan Email tidak cocok");
+                if(res.status === 403) {
+                    setError("Akun belum aktif. Silahkan kontak Administrator");
+                    form.reset();
+                    return;
+                } else if(res.status === 401) {
+                    setError("Akun belum terdaftar. Silahkan daftar terlebih dahulu");
                     form.reset();
                     return;
                 }
