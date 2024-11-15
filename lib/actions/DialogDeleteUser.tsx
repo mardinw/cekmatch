@@ -7,7 +7,7 @@ import { FormEventHandler, useState } from 'react';
 
 
 
-export default function DialogDeleteUser({uuid}: UsersProps) {
+export default function DialogDeleteUser({uuid, name}: UsersProps) {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const accessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
     if (!accessToken || accessToken === 'undefined') {
@@ -51,7 +51,7 @@ export default function DialogDeleteUser({uuid}: UsersProps) {
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Hapus Pengguna?</DialogTitle>
+            <DialogTitle>Hapus Akun {name.toUpperCase()}?</DialogTitle>
             <DialogDescription>
               Apakah anda akan menghapus data pengguna ini ?
             </DialogDescription>

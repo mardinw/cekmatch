@@ -12,7 +12,7 @@ export const columnsListUsers: ColumnDef<ListUsers>[] = [
   },
   {
     accessorKey: "role",
-    header: "Role",
+    header: "Hak Akses",
   },
   {
     accessorKey: "is_active",
@@ -29,8 +29,8 @@ export const columnsListUsers: ColumnDef<ListUsers>[] = [
       const users = row.original;
     return  (
       <div className="flex space-x-4">
-        <ActionsUsers uuid={users.uuid}/>
-        <DialogDeleteUser uuid={users.uuid}/>
+        <ActionsUsers uuid={users.uuid} name={users.name}/>
+        <DialogDeleteUser uuid={users.uuid} name={users.name}/>
       </div>
     )
     }, 

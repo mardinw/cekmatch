@@ -1,3 +1,4 @@
 export interface UsersProps {
-    uuid: string
+    uuid: string;
+    name: string;
 }
