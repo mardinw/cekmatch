@@ -3,10 +3,12 @@ import { UsersProps } from '@/dtos/interfaceUsers';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import PopupSelectRowUser from '@/components/popupSelectRowUser';
 import { SquarePen } from 'lucide-react';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 
 
 
-export default function RowActionsUsers({uuid}: UsersProps) {
+export default function ActionsUsers({uuid}: UsersProps) {
 
     return (
       <Dialog>
@@ -23,10 +25,17 @@ export default function RowActionsUsers({uuid}: UsersProps) {
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <PopupSelectRowUser/>
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="pilihan" className="text-right">
+                Pilihan
+              </Label>
+              <Input id="pilihan" className="col-span-3" />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="username" className="text-right">
+                Username
+              </Label>
+              <Input id="username" className="col-span-3" />
           </div>
         </div>
         <DialogFooter>

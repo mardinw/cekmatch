@@ -2,8 +2,8 @@
 
 import { ListUsers } from "@/dtos/listUsers"
 import DialogDeleteUser from "@/lib/actions/DialogDeleteUser"
-import RowActionsUsers from "@/lib/actions/rowActionsUsers"
 import { ColumnDef } from "@tanstack/react-table"
+import ActionsUsers from "@/lib/actions/ActionsUsers"
 
 export const columnsListUsers: ColumnDef<ListUsers>[] = [
   {
@@ -17,6 +17,10 @@ export const columnsListUsers: ColumnDef<ListUsers>[] = [
   {
     accessorKey: "is_active",
     header: "Status",
+    cell: ({row}) => {
+      const status = row.original;
+      return status.is_active === 1 ? 'Aktif': 'Tidak Aktif'
+    },
   },
   {
     id: "actions",
@@ -25,7 +29,7 @@ export const columnsListUsers: ColumnDef<ListUsers>[] = [
       const users = row.original;
     return  (
       <div className="flex space-x-4">
-        <RowActionsUsers uuid={users.uuid}/>
+        <ActionsUsers uuid={users.uuid}/>
         <DialogDeleteUser uuid={users.uuid}/>
       </div>
     )
