@@ -29,7 +29,6 @@ export default function ActionsUsers({uuid, name}: UsersProps) {
     
     const handleStatusChange = (value: string) => {
       setStatusValue(value);
-      console.log(statusValue);
     };
 
 
