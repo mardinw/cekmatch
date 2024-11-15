@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/button';
 import { UsersProps } from '@/dtos/interfaceUsers';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import PopupSelectRowUser from '@/components/popupSelectRowUser';
 import { SquarePen } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 
 
@@ -27,9 +27,22 @@ export default function ActionsUsers({uuid}: UsersProps) {
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="pilihan" className="text-right">
-                Pilihan
+                Ubah Data
               </Label>
-              <Input id="pilihan" className="col-span-3" />
+              <Select>
+                <SelectTrigger className="col-span-3">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Data</SelectLabel>
+                    <SelectItem value="username">Username</SelectItem>
+                    <SelectItem value="password">Password</SelectItem>
+                    <SelectItem value="role">Role</SelectItem>
+                    <SelectItem value="is_active">Status</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="username" className="text-right">
