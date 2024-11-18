@@ -24,7 +24,7 @@ export default function Administrator() {
             const decoded = jwt.decode(accessToken);
             if (decoded && typeof decoded === 'object' && 'role' in decoded) {
                 if (decoded.role === 'admin') {
-                    router.push('/admin');
+                    router.push('/users');
                 } else if (decoded.role === 'user') {
                     router.push('/dashboard');
                 }

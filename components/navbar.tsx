@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Button, buttonVariants } from "./ui/button";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import jwt from 'jsonwebtoken';
 
 export default function Navbar() {
 
@@ -13,6 +14,7 @@ export default function Navbar() {
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [isActive, setIsActive] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const isAccessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
 
@@ -42,6 +44,14 @@ export default function Navbar() {
 
     useEffect(() => {
         if (isAccessToken && isAccessToken !== 'undefined') {
+            const decoded = jwt.decode(isAccessToken);
+            if (decoded && typeof decoded === 'object' && 'role' in decoded) {
+                if(decoded.role === 'admin') {
+                    setIsAdmin(true);
+                } else if (decoded.role === 'user') {
+                    setIsAdmin(false);
+                }
+            }
             setIsActive(true);
         } else {
             setIsActive(false);
@@ -57,6 +67,11 @@ export default function Navbar() {
                     <span className="font-bold">Check Match.</span>
                 </Link>
                 <div>
+                    {isAdmin && 
+                    <Button variant={'green'}>
+                        <Link href='/users'>List User</Link>
+                    </Button>
+                    }
                     { isActive ? (
                         <Button onClick={handleLogout} variant={'sky'}>Sign Out</Button>
                     ): 
