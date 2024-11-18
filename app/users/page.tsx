@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { useRouter } from "next/navigation";
 import DataTableListUsers from "./dataTableListUsers";
 
-export default function Administrator() {
+export default function Users() {
     const router = useRouter();
     const [accessToken, setAccessToken] = useState<string | null>(null);
 

@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ChangeEvent, useState } from 'react';
+import { authClient } from '../auth-client';
 
 
 
@@ -14,6 +15,11 @@ export default function ActionsUsers({uuid, name}: UsersProps) {
     const [inputValue, setInputValue] = useState<string>('');
     const [roleValue, setRoleValue] = useState<string>('user'); // Untuk role
     const [statusValue, setStatusValue] = useState<string>('0'); // Untuk status (aktif atau tidak aktif)
+    
+    const accessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
+    if (!accessToken || accessToken === 'undefined') {
+        return null; // Kembali ke null jika token tidak ada atau tidak valid
+    }
 
     const handleSelectChange = (value: string) => {
       setSelectedField(value);
@@ -32,9 +38,43 @@ export default function ActionsUsers({uuid, name}: UsersProps) {
     };
 
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
+      const payload: Record<string, string|number|undefined> = {};
+
+      if (selectField === 'username') {
+        payload.username = inputValue;
+      } else if (selectField === 'password') {
+        payload.password = inputValue;
+      } else if (selectField === 'role') {
+        payload.role = roleValue;
+      } else if (selectField === 'is_active') {
+        payload.is_active = parseInt(statusValue, 10);
+      }
+
       // akses api disini
-      console.log(`Updating ${selectField} for user ${uuid} to ${inputValue || roleValue} '${statusValue}'`);
+      try { 
+        const res = await fetch(`${authClient.baseURL}/v1/data/user?uuid=${uuid}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if(res.ok) {
+          console.log('User update successfully');
+        } else {
+          const errData = await res.json();
+          console.error('Failed to update user:', errData);
+        }
+
+      } catch (e) {
+        console.log('Error updating user:', e);
+      } finally {
+        window.location.reload();
+      }
+      console.log(`Updating ${selectField} for user ${uuid} to ${inputValue || roleValue || statusValue}'`);
     }
 
     return (

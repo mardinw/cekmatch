@@ -67,13 +67,25 @@ export default function Navbar() {
                     <span className="font-bold">Check Match.</span>
                 </Link>
                 <div>
-                    {isAdmin && 
-                    <Button variant={'green'}>
-                        <Link href='/users'>List User</Link>
+                    {isAdmin ? (
+                    <>
+                    <Button variant={'sky'} className="mx-2" onClick={() => router.push('/dashboard')}>
+                        Dashboard
                     </Button>
+                    <Button variant={'sky'} className="mx-2"
+                    onClick={() => router.push('/users')}>
+                        List User
+                    </Button>
+                    </>
+                    ) : (
+                    <Button variant={'sky'} className="mx-2"
+                    onClick={() => router.push('/dashboard')}>
+                        Dashboard
+                    </Button>
+                    )
                     }
                     { isActive ? (
-                        <Button onClick={handleLogout} variant={'sky'}>Sign Out</Button>
+                        <Button onClick={handleLogout} variant={'green'}>Sign Out</Button>
                     ): 
                     <Link href="/signin" className={buttonVariants()}>Sign In</Link>
                     }
