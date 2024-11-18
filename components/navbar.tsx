@@ -2,7 +2,6 @@
 import { AirVent, CircleUserRound } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Button, buttonVariants } from "./ui/button";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import jwt from 'jsonwebtoken';
@@ -12,7 +11,6 @@ import {
   MenubarItem,
   MenubarMenu,
   MenubarSeparator,
-  MenubarShortcut,
   MenubarTrigger,
 } from "@/components/ui/menubar"
 
