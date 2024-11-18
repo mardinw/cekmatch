@@ -49,10 +49,6 @@ export default function RowProfileActions({fileName}: FileProps) {
         setClickedPreviewButton({});
     }
 
-    // const handleDeleteClick = (file:string) => {
-    //     setSelectedDelete(file);
-    // }
-
     const toggleMenu = () => {
         setIsMenuOpen(prev => !prev);
     }
@@ -69,7 +65,7 @@ export default function RowProfileActions({fileName}: FileProps) {
         {isMenuOpen && (
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => handlePreviewClick(fileName)}>Read Data</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handlePreviewClick(fileName)}>Ubah Password</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => handleMatchClick(fileName)}>Match Data</DropdownMenuItem>
             <DropdownMenuItem onClick={() => HandlerMatchExport({fileName})}>Export Match</DropdownMenuItem>
