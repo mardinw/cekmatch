@@ -61,7 +61,7 @@ export default function SignIn() {
             if(decoded &&  typeof decoded === 'object' && 'role' in decoded) {
 
                 if(decoded.role === 'admin') {
-                    router.push('/admin');
+                    router.push('/users');
                 } else if(decoded.role === 'user') {
                     router.push('/dashboard');
                 }
