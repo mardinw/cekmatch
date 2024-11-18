@@ -1,11 +1,22 @@
 "use client"
-import { AirVent } from "lucide-react";
+import { AirVent, CircleUserRound } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button, buttonVariants } from "./ui/button";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import jwt from 'jsonwebtoken';
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarTrigger,
+} from "@/components/ui/menubar"
+
+
 
 export default function Navbar() {
 
@@ -62,34 +73,33 @@ export default function Navbar() {
         <>
         <div className="border-b px-4">
             <div className="flex items-center justify-between mx-auto max-w-4xl h-16">
-                <Link href='/' className="flex items-center gap-2">
+                <Link href='/' className="flex items-center gap-4">
                     <AirVent className="h-6 w-6"/>
                     <span className="font-bold">Check Match.</span>
                 </Link>
-                <div>
-                    {isAdmin ? (
-                    <>
-                    <Button variant={'sky'} className="mx-2" onClick={() => router.push('/dashboard')}>
-                        Dashboard
-                    </Button>
-                    <Button variant={'sky'} className="mx-2"
-                    onClick={() => router.push('/users')}>
-                        List User
-                    </Button>
-                    </>
-                    ) : (
-                    <Button variant={'sky'} className="mx-2"
-                    onClick={() => router.push('/dashboard')}>
-                        Dashboard
-                    </Button>
-                    )
+                <Menubar>
+                    <MenubarMenu>
+                        <MenubarTrigger onClick={() => router.push('/dashboard')}>Dashboard</MenubarTrigger>
+                    </MenubarMenu>
+                    {isAdmin && 
+                        <MenubarMenu>
+                            <MenubarTrigger onClick={() => router.push('/users')}>List Pengguna</MenubarTrigger>
+                        </MenubarMenu>
                     }
-                    { isActive ? (
-                        <Button onClick={handleLogout} variant={'green'}>Sign Out</Button>
-                    ): 
-                    <Link href="/signin" className={buttonVariants()}>Sign In</Link>
-                    }
-                </div>
+                    <MenubarMenu>
+                        <MenubarTrigger>
+                            <CircleUserRound />
+                        </MenubarTrigger>
+                        <MenubarContent>
+                        <MenubarItem>Ubah Password</MenubarItem>
+                        <MenubarSeparator />
+                        {isActive &&
+                            <MenubarItem onClick={handleLogout}>Keluar</MenubarItem>
+                        }
+                        </MenubarContent>
+                    </MenubarMenu>
+                </Menubar>
+
             </div>
         </div>
         </>

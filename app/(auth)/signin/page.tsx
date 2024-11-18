@@ -72,16 +72,16 @@ export default function SignIn() {
             });
         } catch(err) {
             console.error('Login failed:', err);
-            setError(`Login failed: Contact your administrator`);
+            setError(`Gagal Masuk. Silahkan coba hubungi Admin`);
         }
     }
 
   return (
     <Card>
         <CardHeader className="w-full max-w-md mx-auto">
-            <CardTitle>Sign In</CardTitle>
+            <CardTitle>Portal Masuk</CardTitle>
             <CardDescription>
-                Welcome back! Please sign in to continue.
+                Selamat Datang Kembali. Slahkan masuk bila ingin melanjutkan.
             </CardDescription>
         </CardHeader>
         <CardContent>
@@ -92,7 +92,7 @@ export default function SignIn() {
                         name="username"
                         render={( {field} ) => (
                             <FormItem>
-                                <FormLabel>Username</FormLabel>
+                                <FormLabel>Nama Pengguna</FormLabel>
                                 <FormControl>
                                     <Input type="text" placeholder="your username" {...field} />
                                 </FormControl>
@@ -114,14 +114,14 @@ export default function SignIn() {
                         )}
                     />
                     {errorMessage && <p className="text-error">{errorMessage}</p>}
-                    <Button className="w-full" variant={'sky'} type="submit">Submit</Button>
+                    <Button className="w-full" variant={'sky'} type="submit">Masuk</Button>
                 </form>
             </Form>
         </CardContent>
         <CardFooter className="flex justify-center">
             <p className="text-sm text-muted-foreground">
-                Don&apos;t have an account type?{' '}
-                <Link href='/signup' className="text-primary hover:underline">Sign Up</Link>
+                Belum punya akun?{' '}
+                <Link href='/signup' className="text-primary hover:underline">Daftar</Link>
             </p>
         </CardFooter>
     </Card>

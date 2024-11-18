@@ -56,16 +56,16 @@ export default function SignUp() {
             router.push('/signin');
         } catch(err) {
             console.error('Register failed:', err);
-            setError('Create Account Failed. Try different Username');
+            setError('Daftar akun gagal. Silahkan coba lagi dengan nama pengguna berbeda');
         }
     }
 
   return (
     <Card>
         <CardHeader className="w-full max-w-md mx-auto">
-            <CardTitle>Sign Up</CardTitle>
+            <CardTitle>Portal Pendaftaran</CardTitle>
             <CardDescription>
-                Welcome back! Please sign up to continue.
+                Selamat Datang! Silahkan daftar bila ingin melanjutkan.
             </CardDescription>
         </CardHeader>
         <CardContent>
@@ -76,7 +76,7 @@ export default function SignUp() {
                         name="username"
                         render={( {field} ) => (
                             <FormItem>
-                                <FormLabel>Username</FormLabel>
+                                <FormLabel>Nama Pengguna</FormLabel>
                                 <FormControl>
                                     <Input type="text" placeholder="username" {...field} />
                                 </FormControl>
@@ -98,14 +98,14 @@ export default function SignUp() {
                         )}
                     />
                     {errorMessage && <p className="text-error">{errorMessage}</p>}
-                    <Button className="w-full" type="submit" variant={'green'}>Submit</Button>
+                    <Button className="w-full" type="submit" variant={'sky'}>Daftar</Button>
                 </form>
             </Form>
         </CardContent>
         <CardFooter className="flex justify-center">
             <p className="text-sm text-muted-foreground">
                 Don&apos;t have an account type?{' '}
-                <Link href='/signin' className="text-primary hover:underline">Sign In</Link>
+                <Link href='/signin' className="text-primary hover:underline">Masuk</Link>
             </p>
         </CardFooter>
     </Card>

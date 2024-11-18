@@ -61,7 +61,7 @@ export default function ActionsUsers({uuid, name}: UsersProps) {
           },
           body: JSON.stringify(payload),
         });
-
+        console.log(payload)
         if(res.ok) {
           console.log('User update successfully');
         } else {
