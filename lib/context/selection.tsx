@@ -15,6 +15,7 @@ export const SelectionProvider: FC<{ children: ReactNode}> = ({children}) => {
     const [clickedExportButton, setClickedExportButton] = useState<Record<string,boolean>>({});
     const [clickedDeleteButton, setClickedDeleteButton] = useState<Record<string,boolean>>({});
     const [file, setFile] = useState<File>();
+    const [isLoading, setIsLoading] = useState<boolean>(false); // Tambahkan ini
 
     return (
         <SelectionContext.Provider value={{
@@ -27,6 +28,7 @@ export const SelectionProvider: FC<{ children: ReactNode}> = ({children}) => {
             clickedExportButton, setClickedExportButton,
             clickedDeleteButton, setClickedDeleteButton,
             file, setFile,
+            isLoading, setIsLoading
         }}>
             {children}
         </SelectionContext.Provider>
