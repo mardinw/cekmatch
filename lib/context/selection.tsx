@@ -15,7 +15,8 @@ export const SelectionProvider: FC<{ children: ReactNode}> = ({children}) => {
     const [clickedExportButton, setClickedExportButton] = useState<Record<string,boolean>>({});
     const [clickedDeleteButton, setClickedDeleteButton] = useState<Record<string,boolean>>({});
     const [file, setFile] = useState<File>();
-    const [isLoading, setIsLoading] = useState<boolean>(false); // Tambahkan ini
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [openDialogChangePassword, setOpenDialogChangePassword] = useState<boolean>(false);
 
     return (
         <SelectionContext.Provider value={{
@@ -28,7 +29,8 @@ export const SelectionProvider: FC<{ children: ReactNode}> = ({children}) => {
             clickedExportButton, setClickedExportButton,
             clickedDeleteButton, setClickedDeleteButton,
             file, setFile,
-            isLoading, setIsLoading
+            isLoading, setIsLoading,
+            openDialogChangePassword, setOpenDialogChangePassword,
         }}>
             {children}
         </SelectionContext.Provider>
@@ -38,7 +40,7 @@ export const SelectionProvider: FC<{ children: ReactNode}> = ({children}) => {
 export const useSelection = () => {
     const context = useContext(SelectionContext);
     if(!context) {
-        throw new Error('useSelection must be used within a SelectioProvider');
+        throw new Error('useSelection must be used within a SelectionProvider');
     }
     return context;
 }

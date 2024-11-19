@@ -21,4 +21,6 @@ export interface SelectionContextType {
     setFile: Dispatch<SetStateAction<File|undefined>>;
     isLoading: boolean;
     setIsLoading: Dispatch<SetStateAction<boolean>>;
+    openDialogChangePassword: boolean;
+    setOpenDialogChangePassword: Dispatch<SetStateAction<boolean>>;
 }

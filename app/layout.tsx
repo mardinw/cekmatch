@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { SelectionProvider } from "@/lib/context/selection";
 
 
 export const metadata: Metadata = {
@@ -17,8 +18,10 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
+            <SelectionProvider>
         {children}
         <Toaster />
+        </SelectionProvider>
       </body>
     </html>
   );

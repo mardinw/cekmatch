@@ -13,6 +13,8 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar"
+import DialogUpdatePassword from "@/lib/actions/DialogUpdatePassword";
+import { useSelection } from "@/lib/context/selection";
 
 
 
@@ -24,6 +26,10 @@ export default function Navbar() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [isActive, setIsActive] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
+    const {
+        openDialogChangePassword,
+        setOpenDialogChangePassword
+    } = useSelection();
 
     const isAccessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
 
@@ -51,6 +57,9 @@ export default function Navbar() {
         .catch((error) => console.error('Error:', error));
     };
 
+    const handleOpenDialog = () => {
+        setOpenDialogChangePassword(true);
+    };
     useEffect(() => {
         if (isAccessToken && isAccessToken !== 'undefined') {
             const decoded = jwt.decode(isAccessToken);
@@ -89,7 +98,7 @@ export default function Navbar() {
                             <CircleUserRound />
                         </MenubarTrigger>
                         <MenubarContent>
-                        <MenubarItem>Ubah Password</MenubarItem>
+                        <MenubarItem onClick={handleOpenDialog}>Ubah Password</MenubarItem>
                         <MenubarSeparator />
                         {isActive &&
                             <MenubarItem onClick={handleLogout}>Keluar</MenubarItem>

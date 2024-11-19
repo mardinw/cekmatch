@@ -1,22 +1,42 @@
+"use client"
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle} from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { SquarePen } from 'lucide-react'
 import React, { ChangeEvent, useState } from 'react'
 import { authClient } from '../auth-client'
+import jwt from 'jsonwebtoken';
+import { useRouter } from 'next/navigation'
+import { useSelection } from '../context/selection'
 
-export default function DialogUpdatePassword (uuid: string) {
+export default function DialogUpdatePassword () {
 
+    const router = useRouter()
     const [inputValue, setInputValue] = useState<string>('');
+    const {
+      openDialogChangePassword,
+      setOpenDialogChangePassword,
+    } = useSelection();
+
     const accessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
     if (!accessToken || accessToken === 'undefined') {
         return null; // Kembali ke null jika token tidak ada atau tidak valid
     }
 
+
+    const decoded = jwt.decode(accessToken);
+    let uuid : string = ""; 
+    if (decoded && typeof decoded === 'object' && 'role' in decoded) {
+      uuid = decoded.uuid;
+    } else {
+      router.push('/signin');
+    }
+
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
       setInputValue(event.target.value);
     }
+
+    const handleClose = () => setOpenDialogChangePassword(false);
 
     const handleSubmit = async () => {
 
@@ -49,13 +69,7 @@ export default function DialogUpdatePassword (uuid: string) {
       }
     }
     return (
-      <>
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant={'warning'}>
-          <SquarePen className='h-6 w-6 bg-indigo-500'/>
-        </Button>
-      </DialogTrigger>
+    <Dialog open={openDialogChangePassword} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Ubah Password Akun</DialogTitle>
@@ -66,12 +80,9 @@ export default function DialogUpdatePassword (uuid: string) {
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="pilihan" className="text-right">
-              Ubah Data
+              Ubah Password
             </Label>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor={inputValue} className="text-right">
-              Password
-            </Label>
             <Input 
               id={inputValue}
               className="col-span-3" 
@@ -87,6 +98,5 @@ export default function DialogUpdatePassword (uuid: string) {
       </DialogFooter>
       </DialogContent>
     </Dialog>
-    </>
     )
 }
