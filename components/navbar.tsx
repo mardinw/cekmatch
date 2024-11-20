@@ -13,7 +13,6 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar"
-import DialogUpdatePassword from "@/lib/actions/DialogUpdatePassword";
 import { useSelection } from "@/lib/context/selection";
 
 
@@ -27,7 +26,6 @@ export default function Navbar() {
     const [isActive, setIsActive] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const {
-        openDialogChangePassword,
         setOpenDialogChangePassword
     } = useSelection();
 

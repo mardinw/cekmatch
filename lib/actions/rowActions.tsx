@@ -1,11 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal } from 'lucide-react';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelection } from '../context/selection';
 import { FileProps } from '@/dtos/interfaceFilename';
 import { HandlerMatchExport } from './handlerMatchExport';
 import { HandlerDelete } from './handlerDelete';
+import jwt from 'jsonwebtoken';
 
 
 
@@ -24,6 +25,25 @@ export default function RowActions({fileName}: FileProps) {
         setClickedMatchButton,
     } = useSelection();
 
+    const [, setIsActive] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const isAccessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
+    useEffect(() => {
+        if (isAccessToken && isAccessToken !== 'undefined') {
+            const decoded = jwt.decode(isAccessToken);
+            if (decoded && typeof decoded === 'object' && 'role' in decoded) {
+                if(decoded.role === 'admin') {
+                    setIsAdmin(true);
+                } else if (decoded.role === 'user') {
+                    setIsAdmin(false);
+                }
+            }
+            setIsActive(true);
+        } else {
+            setIsActive(false);
+        }
+    }, [isAccessToken]);
+    
     const handlePreviewClick = (file:string) =>{
         if(selectedPreview === file) {
           // jika file yang diklik sama, maka hilangkan preview
@@ -49,10 +69,6 @@ export default function RowActions({fileName}: FileProps) {
         setClickedPreviewButton({});
     }
 
-    // const handleDeleteClick = (file:string) => {
-    //     setSelectedDelete(file);
-    // }
-
     const toggleMenu = () => {
         setIsMenuOpen(prev => !prev);
     }
@@ -73,7 +89,9 @@ export default function RowActions({fileName}: FileProps) {
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => handleMatchClick(fileName)}>Match Data</DropdownMenuItem>
             <DropdownMenuItem onClick={() => HandlerMatchExport({fileName})}>Export Match</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => HandlerDelete({fileName})}>Delete Data</DropdownMenuItem>
+            {isAdmin && 
+              <DropdownMenuItem onClick={() => HandlerDelete({fileName})}>Delete Data</DropdownMenuItem>
+            }
           </DropdownMenuContent>
         )}
       </DropdownMenu>

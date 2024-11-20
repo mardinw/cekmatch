@@ -26,11 +26,11 @@ export const columnsMatch: ColumnDef<MatchFile>[] = [
     header: "Nama Match",
   },
   {
-    accessorKey: "kecamatan",
-    header: "Kecamatan Match",
-  },
-  {
     accessorKey: "kelurahan",
     header: "Kelurahan Match",
+  },
+  {
+    accessorKey: "kecamatan",
+    header: "Kecamatan Match",
   },
 ]
