@@ -14,12 +14,12 @@ export const columnsMatch: ColumnDef<MatchFile>[] = [
     header: "Alamat Data",
   },
   {
-    accessorKey: "kecamatan_data",
-    header: "Kecamatan Data",
-  },
-  {
     accessorKey: "kelurahan_data",
     header: "Kelurahan Data",
+  },
+  {
+    accessorKey: "kecamatan_data",
+    header: "Kecamatan Data",
   },
   {
     accessorKey: "nama",
