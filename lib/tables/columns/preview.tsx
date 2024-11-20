@@ -32,12 +32,12 @@ export const columnsPreview: ColumnDef<ListAllFile>[] = [
     header: "Alamat",
   },
   {
-    accessorKey: "kecamatan",
-    header: "Kecamatan",
-  },
-  {
     accessorKey: "kelurahan",
     header: "Kelurahan",
+  },
+  {
+    accessorKey: "kecamatan",
+    header: "Kecamatan",
   },
   {
     accessorKey: "file",
