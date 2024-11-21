@@ -86,6 +86,11 @@ export default function Navbar() {
                     <MenubarMenu>
                         <MenubarTrigger onClick={() => router.push('/dashboard')}>Dashboard</MenubarTrigger>
                     </MenubarMenu>
+                    {!isAdmin && 
+                        <MenubarMenu>
+                            <MenubarTrigger onClick={() => router.push('/profile')}>Profile</MenubarTrigger>
+                        </MenubarMenu>
+                    }
                     {isAdmin && 
                         <MenubarMenu>
                             <MenubarTrigger onClick={() => router.push('/users')}>List Pengguna</MenubarTrigger>
