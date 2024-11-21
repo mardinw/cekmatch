@@ -6,6 +6,15 @@ import { ColumnDef } from "@tanstack/react-table"
 
 export const columnsMatch: ColumnDef<MatchFile>[] = [
   {
+    id: "no",
+    header: "No",
+    cell: ({row}) => {
+      console.log(row.index);
+      const column = row.index + 1;
+      return column;
+    },
+  },
+  {
     accessorKey: "nama_data",
     header: "Nama Data",
   },

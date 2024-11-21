@@ -7,6 +7,15 @@ import ActionsUsers from "@/lib/actions/ActionsUsers"
 
 export const columnsListUsers: ColumnDef<ListUsers>[] = [
   {
+    id: "no",
+    header: "No",
+    cell: ({row}) => {
+      console.log(row.index);
+      const column = row.index + 1;
+      return column;
+    },
+  },
+  {
     accessorKey: "name",
     header: "Username",
   },
