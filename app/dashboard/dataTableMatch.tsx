@@ -44,7 +44,8 @@ export default function DataTableMatch() {
     const router = useRouter();
     const [data, setData] = useState<MatchFile[] | null>(null);
     const {selectedMatch} = useSelection();
-    
+
+
     useEffect(() => {
         const getData = async () => {
           if(selectedMatch) {
