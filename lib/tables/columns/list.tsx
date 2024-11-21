@@ -9,7 +9,6 @@ export const columnsList: ColumnDef<ListAllFile>[] = [
     id: "no",
     header: "No",
     cell: ({row}) => {
-      console.log(row.index);
       const column = row.index + 1;
       return column;
     },
