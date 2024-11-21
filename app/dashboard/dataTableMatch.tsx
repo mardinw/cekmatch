@@ -59,7 +59,7 @@ export default function DataTableMatch() {
         };
 
        getData();
-    }, [router]);
+    },);
 
     const handleExport = () => {
       if(selectedMatch) {
@@ -72,7 +72,9 @@ export default function DataTableMatch() {
       <div className="flex items-center justify-end py-4">
         <Button className="sm" onClick={handleExport}>Export</Button>
       </div>
-      {data && <TableMatchFile  columns={columnsMatch} data={data}/>}
+      {data ? 
+      (<TableMatchFile  columns={columnsMatch} data={data}/>) : 
+      ( <p className="text-center">Loading...</p>)}
     </>
   )
 }

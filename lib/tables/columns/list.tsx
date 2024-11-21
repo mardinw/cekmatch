@@ -6,6 +6,14 @@ import { ColumnDef } from "@tanstack/react-table"
 
 export const columnsList: ColumnDef<ListAllFile>[] = [
   {
+    id: "no",
+    header: "No",
+    cell: ({row}) => {
+      const column = row.index + 1;
+      return column;
+    },
+  },
+  {
     accessorKey: "name",
     header: "Nama Pengguna",
   },
