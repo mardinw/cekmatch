@@ -7,7 +7,6 @@ import { authClient } from "@/lib/auth-client";
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { HandleDownloadSample } from "@/lib/actions/handlerDownloadSample";
-import { Subscription } from "@/components/subscriptions";
 
 
 export default function Dashboard() {

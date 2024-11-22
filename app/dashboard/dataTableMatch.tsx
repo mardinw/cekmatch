@@ -59,7 +59,7 @@ export default function DataTableMatch() {
         };
 
        getData();
-    },);
+    }, [router]);
 
     const handleExport = () => {
       if(selectedMatch) {
