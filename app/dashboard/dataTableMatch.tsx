@@ -74,7 +74,7 @@ export default function DataTableMatch() {
       </div>
       {data ? 
       (<TableMatchFile  columns={columnsMatch} data={data}/>) : 
-      ( <p className="text-center">Loading...</p>)}
+      ( <p className="text-center">Checking...</p>)}
     </>
   )
 }
