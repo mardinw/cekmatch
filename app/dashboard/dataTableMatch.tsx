@@ -59,7 +59,7 @@ export default function DataTableMatch() {
         };
 
        getData();
-    },);
+    }, [router]);
 
     const handleExport = () => {
       if(selectedMatch) {
@@ -74,7 +74,7 @@ export default function DataTableMatch() {
       </div>
       {data ? 
       (<TableMatchFile  columns={columnsMatch} data={data}/>) : 
-      ( <p className="text-center">Loading...</p>)}
+      ( <p className="text-center">Checking...</p>)}
     </>
   )
 }
