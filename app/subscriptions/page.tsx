@@ -2,7 +2,7 @@
 import { Subscription } from "@/components/subscriptions";
 import { useRouter } from "next/navigation";
 
-export default function Profile() {
+export default function Subscriptions() {
   const router = useRouter();
   const isAccessToken = typeof window !== "undefined" ? localStorage.getItem('access_token') : null;
 
