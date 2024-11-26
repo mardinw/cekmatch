@@ -40,18 +40,14 @@ export default function Dashboard() {
         body: data,
       });
 
-      const result = await res.json();
-      console.log(result);
       if(!res.ok) {
-        if(res.status === 400) {
-          console.log(`${res.statusText}`)
-        } else {
-          throw new Error(await res.text());
-        }
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'An unknown error occured');
       }
-
+      alert('Upload Successful!');
     } catch (error) {
       console.error(error);
+      alert(`Upload failed: ${error}`);
     } finally {
       setIsUploading(false);
       window.location.reload();

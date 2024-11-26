@@ -92,9 +92,14 @@ export default function Navbar() {
                         </MenubarMenu>
                     }
                     {isAdmin && 
-                        <MenubarMenu>
-                            <MenubarTrigger onClick={() => router.push('/users')}>List Pengguna</MenubarTrigger>
-                        </MenubarMenu>
+                        <>
+                            <MenubarMenu>
+                                <MenubarTrigger onClick={() => router.push('/subscriptions')}>Subscriptions</MenubarTrigger>
+                            </MenubarMenu>
+                            <MenubarMenu>
+                                <MenubarTrigger onClick={() => router.push('/users')}>List Pengguna</MenubarTrigger>
+                            </MenubarMenu>
+                        </>
                     }
                     <MenubarMenu>
                         <MenubarTrigger>
