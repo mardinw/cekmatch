@@ -1,6 +1,6 @@
 "use client"
-import { Subscription } from "@/components/subscriptions";
 import { useRouter } from "next/navigation";
+import DataTableListSubscriptions from "./dataTableListSubscriptions";
 
 export default function Subscriptions() {
   const router = useRouter();
@@ -19,6 +19,6 @@ export default function Subscriptions() {
   //   isAuthorize();
   // })
   return (
-    <Subscription/>
+    <DataTableListSubscriptions/>
   )
 }
