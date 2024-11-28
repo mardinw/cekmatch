@@ -49,7 +49,7 @@ export default function SignIn() {
                     form.reset();
                     return;
                 } else if(res.status === 401) {
-                    setError("Akun belum terdaftar. Silahkan daftar terlebih dahulu");
+                    setError("Wrong password or username");
                     form.reset();
                     return;
                 }
