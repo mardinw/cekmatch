@@ -7,6 +7,7 @@ import { authClient } from "@/lib/auth-client";
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { HandleDownloadSample } from "@/lib/actions/handlerDownloadSample";
+import { Button } from "@/components/ui/button";
 
 
 export default function Dashboard() {
@@ -16,6 +17,7 @@ export default function Dashboard() {
     file, setFile 
   } = useSelection();
   const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   //const router = useRouter();
   const onSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
@@ -62,20 +64,20 @@ export default function Dashboard() {
     {/* Tambahkan tombol Download Sample dan Upload Data */}
     <form className="p-2" onSubmit={onSubmit}>
       <div className="mt-4 flex justify-center space-x-4">
-          <button 
+          <Button 
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
             onClick={() => HandleDownloadSample()}
           >
             Download Sample
-          </button>
+          </Button>
 
         <Input type="file" name="file" className="w-full max-w-xs" onChange={(e) => setFile(e.target.files?.[0])}/> 
-          <button 
+          <Button 
             className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
           type="submit"
           >
             {isUploading ? 'Upload...' : 'UPLOAD'}
-          </button>
+          </Button>
       </div>
     </form>
     <div className="flex-grow p-6 md:overflow-y-auto md:p-12">

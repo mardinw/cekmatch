@@ -5,7 +5,7 @@ export const Subscription = () => {
             <div className="border rounded-lg bg-gray-50 p-6 shadow-md">
                 <h2 className="text-lg font-semibold mb-4">Informasi Langganan</h2>
                 <p className="text-gray-700 mb-2">
-                    <span className="font-medium">Nama Pengguna:</span> Mardin
+                    <span className="font-medium">Nama Pengguna:</span>
                 </p>
                 <p className="text-gray-700 mb-2">
                     <span className="font-medium">Max. Upload:</span> 0

@@ -44,6 +44,7 @@ export default function DataTableMatch() {
     const router = useRouter();
     const [data, setData] = useState<MatchFile[] | null>(null);
     const {selectedMatch} = useSelection();
+    const [isExporting, setIsExporting] = useState(false);
 
 
     useEffect(() => {
@@ -61,16 +62,27 @@ export default function DataTableMatch() {
        getData();
     }, [router]);
 
-    const handleExport = () => {
+    const handleExport = async() => {
       if(selectedMatch) {
-        HandlerMatchExport({fileName: selectedMatch})
+        setIsExporting(true); // Set loading true sebelum memulai proses
+        try {
+          await HandlerMatchExport({fileName: selectedMatch})
+          alert("Export berhasil!");
+        } catch (error) {
+          console.error("Error during export:", error);
+          alert("Terjadi kesalahan saat melakukan export.");
+        } finally{
+          setIsExporting(false);
+        }
       }
     }
 
   return (
     <>
       <div className="flex items-center justify-end py-4">
-        <Button className="sm" onClick={handleExport}>Export</Button>
+        <Button className="sm" onClick={handleExport} disabled={isExporting}>
+          {isExporting ? "On Prosess..." : "Export"}
+        </Button>
       </div>
       {data ? 
       (<TableMatchFile  columns={columnsMatch} data={data}/>) : 
