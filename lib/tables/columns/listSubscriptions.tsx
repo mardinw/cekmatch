@@ -37,28 +37,24 @@ export const columnsListSubscriptions: ColumnDef<ListSubscriptions>[] = [
     header: "Username",
   },
   {
-    accessorKey: "limit_count",
-    header: "Limit Upload",
+    accessorKey: "limit_active",
+    header: "Limit Active",
   },
   {
-    accessorKey: "is_active",
-    header: "Status",
-    cell: ({row}) => {
-      const status = row.original;
-      return status.is_active === 1 ? 'Aktif': 'Tidak Aktif'
-    },
+    accessorKey: "request_limit",
+    header: "Request Limit",
   },
   {
     id: "actions",
     header: "Aksi",
     cell: ({row}) => {
       const users = row.original;
-    return  (
-      <div className="flex space-x-4">
-        <ActionsSubscriptions uuid={users.uuid} name={users.name}/>
-        <DialogDeleteSubscriptions uuid={users.uuid} name={users.name}/>
-      </div>
-    )
+      return  (
+        <div className="flex space-x-4">
+          <ActionsSubscriptions uuid={users.uuid} name={users.name}/>
+          <DialogDeleteSubscriptions uuid={users.uuid} name={users.name}/>
+        </div>
+      )
     }, 
   },
 ]
